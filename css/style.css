@@ -4,6 +4,15 @@
 	box-sizing: border-box;
 }
 
+:root {
+	--color-primario: #00a0e9;
+	--color-secundario: #00a0e9;
+	--color-resalte: #b48725;
+	--color-main-bg: #fff;
+	--color-main-text: #13322b;
+	--color-logo-imss: #486f6c;
+}
+
 body {
 	width: 100vw;
 	min-width: 800px;
@@ -21,12 +30,13 @@ header {
 	height: 160px;
 	background: url(../img/head.png) no-repeat;
 	background-repeat: space;
-	border-bottom: 8px solid #030;
+	border-bottom: 8px solid var(--color-main-text);
 }
 
 main {
 	padding: 2em;
-	background-color: #fff;
+	background-color: var(--color-main-bg);
+	color: var(--color-logo-imss);
 }
 
 footer {
@@ -40,6 +50,10 @@ footer {
 	align-items: center;
 	font-size: 0.75em;
 	line-height: 00.75em;
+}
+
+h1 {
+	color: var(--color-resalte);
 }
 
 h1,
@@ -138,6 +152,20 @@ a.get-adobe img {
 	margin: 0 1em 1em 1em;
 }
 
+.sidenote img.graph {
+	margin-bottom: 1em;
+}
+
+.sidenote img.graph:last-child {
+	margin-bottom: 0;
+}
+
 hr {
 	clear: both;
+}
+
+.content-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
