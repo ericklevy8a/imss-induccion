@@ -1,46 +1,57 @@
 * {
 	padding: 0;
 	margin: 0;
+	box-sizing: border-box;
 }
 
 body {
 	width: 100vw;
-	min-width: 1280px;
+	min-width: 800px;
 	font-family: Arial, Helvetica, sans-serif;
+	background-color: hsl(134, 10%, 90%);
 }
 
 .container {
-	width: 1280px;
+	max-width: 1280px;
 	margin: 0 auto;
-}
-
-header,
-footer {
-	overflow: hidden;
+	box-shadow: 1px 1px 8px 8px rgba(0, 0, 0, 0.5);
 }
 
 header {
-	height: 81px;
+	height: 160px;
+	background: url(../img/head.png) no-repeat;
+	background-repeat: space;
+	border-bottom: 8px solid #030;
 }
 
 main {
 	padding: 2em;
+	background-color: #fff;
+}
+
+footer {
+	background: url(../img/foot.png) no-repeat;
+	color: #fff;
+	height: 97px;
+	padding-bottom: 32px;
+	padding-top: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 0.75em;
+	line-height: 00.75em;
 }
 
 h1,
 h2,
 h3,
-hr {
+hr,
+p {
 	margin-bottom: 1em;
 }
 
 hr {
 	border: 1px dashed #ddd;
-}
-
-p,
-img {
-	margin-bottom: 1em;
 }
 
 main ul {
@@ -73,7 +84,7 @@ nav ul li a {
 	display: block;
 	padding: 10px;
 	text-decoration: none;
-	color: #001020;
+	color: #001122;
 }
 
 nav ul li a:hover {
@@ -82,7 +93,6 @@ nav ul li a:hover {
 
 nav ul li a.active {
 	background-color: #fff;
-	font-weight: bold;
 }
 
 /* BOTON DESCARGAR */
@@ -98,6 +108,7 @@ a.download {
 	margin-bottom: 1em;
 	height: 2em;
 	line-height: 2em;
+	font-size: 1rem;
 	font-weight: bold;
 	cursor: pointer;
 }
@@ -120,4 +131,13 @@ a.get-adobe img {
 	background-color: #eee;
 	padding: 1em;
 	margin-bottom: 1em;
+}
+
+.sidenote img.float-right {
+	float: right;
+	margin: 0 1em 1em 1em;
+}
+
+hr {
+	clear: both;
 }
