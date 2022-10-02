@@ -171,11 +171,7 @@
         html += '<th>Fecha</th>';
         html += '<th>Adscripción</th>';
         html += '<th>Categoría</th>';
-        //html += '<th>Acciones</th>';
         html += '</tr>';
-
-        console.log('antes');
-
         for (let r = 0; r < data.length; r++) {
             const url = makeURL(data[r]);
             html += '<tr>';
@@ -185,9 +181,6 @@
             html += `<td><a class="download ver" href="${url}" target="_blank">Ver</a></td>`;
             html += '</tr>';
         }
-
-        console.log('despues');
-
         html += '</table>';
         divGuias.innerHTML = html;
     }
