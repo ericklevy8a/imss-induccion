@@ -64,10 +64,14 @@
                 <hr>
 
 
-                <p><strong>Guía de inducción al área y al puesto precargada (PROTOTIPO)</strong>
+                <p><strong>Guía de inducción al área y al puesto pre-llenada (PROTOTIPO)</strong>
                     <br>Formato de archivo: PDF
                 </p>
-                <a class="download" href="testpdf.php">Generar</a>
+                <input type="text" name="matricula" id="matricula" size="9" maxlength="9" placeholder="Matrícula"
+                    pattern="[0-9]+" />
+                <button id="buscar" class="download">Buscar</button>
+                <div id="respuesta"></div>
+                <div id="tabla"></div>
 
                 <hr>
 
@@ -85,5 +89,79 @@
     </div>
 
 </body>
+<script lang="javascript">
+
+    // Referencias a objetos del DOM
+    const txtMatricula = document.getElementById('matricula');
+    const btnBuscar = document.getElementById('buscar');
+    const divRespuesta = document.getElementById('respuesta');
+    const divTabla = document.getElementById('tabla');
+
+    // Manejador del cambio de matrícula
+    txtMatricula.oninput = function () {
+        btnBuscar.removeAttribute('disabled');
+        divRespuesta.innerHTML = '';
+        divTabla.innerHTML = '';
+    }
+
+    // Manejador del click de buscar
+    btnBuscar.onclick = function () {
+        btnBuscar.setAttribute('disabled', 'disabled');
+        const matricula = txtMatricula.value;
+        const regex = new RegExp('[0-9]{7,9}');
+        const valid = regex.test(matricula);
+        if (valid) {
+            fetchData(matricula);
+        } else {
+            divRespuesta.innerHTML = '<span class="msg-bar msg-warn">ERROR: Se debe especificar una matrícula de trabajador válida!</span>';
+        }
+    }
+
+    // Buscar inducciones para una matrícula dada
+    function fetchData(matricula) {
+        const url = 'getdata.php?matricula=' + encodeURI(matricula);
+
+        console.log(url);
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                if (data.length === 0) {
+                    divRespuesta.innerHTML = '<span class="msg-bar msg-info">RESPUESTA: No se encontraron inducciones para esa matrícula!</span>';
+                    return;
+                }
+                if (data.length === 1) {
+                    const row = data[0];
+                    const url = makeURL(row);
+                    window.open(url, '_blank');
+                    return;
+                } else {
+                    showTable(data);
+                }
+            })
+            .catch(err => {
+                divRespuesta.innerHTML = '<span class="msg-bar msg-error">ERROR: Ocurrió un error desconocido!</span>';
+                throw err;
+            });
+    }
+
+    // Desplegar tabla de inducciones
+    function showTable(data) {
+        divTabla.innerHTML = '<span class="info">Generar tabla de inducciones!</span>';
+    }
+
+    function makeURL(row) {
+        let url = 'getpdf.php';
+        url += '?ADSCRIPCION=' + encodeURI(row['Adscripcion']);
+        url += '&NOMBRE_UNIDAD=' + encodeURI(row['Adscripcion']);
+        url += '&CATEGORIA=' + encodeURI(row['Categoria']);
+        url += '&MATRICULA=' + encodeURI(row['Matricula']);
+        url += '&NOMBRE_TRABAJADOR=' + encodeURI(row['Nombre']);
+        url += '&FECHA_INGRESO=' + encodeURI(row['Quincena']);
+        url += '&TIPO_COMPUESTO=' + encodeURI(row['Tipo Compuesto']);
+        return url;
+    }
+
+</script>
 
 </html>

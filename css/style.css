@@ -111,9 +111,10 @@ nav ul li a.active {
 
 /* BOTON DESCARGAR */
 
-a.download {
+.download {
 	display: inline-block;
 	text-decoration: none;
+	border: none;
 	background-color: #b48725;
 	color: #fff;
 	border-radius: 5px;
@@ -127,15 +128,19 @@ a.download {
 	cursor: pointer;
 }
 
-a.download:hover {
+.download:hover {
 	background-color: #f7af09;
 }
 
-a.download:visited {
+.download:visited {
 	background-color: #ccc;
 }
 
-a.get-adobe img {
+.download:disabled {
+	background-color: #ccc;
+}
+
+.get-adobe img {
 	margin-bottom: 0;
 }
 
@@ -168,4 +173,36 @@ hr {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+input[type='text'] {
+	font-size: 18px;
+	vertical-align: middle;
+	padding: 4px;
+	border: none;
+	border-radius: 4px;
+}
+
+.msg-bar {
+	display: block;
+	padding: 4px;
+	border-radius: 4px;
+	margin-bottom: 8px;
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+}
+
+.msg-error {
+	color: #ffffff;
+	background-color: #ff0000;
+}
+
+.msg-warn {
+	color: #000000;
+	background-color: #ffde39;
+}
+
+.msg-info {
+	color: #ffffff;
+	background-color: #4646ff;
 }
