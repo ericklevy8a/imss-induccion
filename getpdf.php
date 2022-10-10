@@ -180,7 +180,11 @@ $DATOS = [
             <tr>
                 <table>
                     <tr>
-                        <td class="bold uppercase" width="10%" rowspan="2">OOAD Colima</td>
+                        <td class="bold uppercase" width="10%" rowspan="2">
+                            <nobr>
+                                <h2>OOAD Colima</h2>
+                            </nobr>
+                        </td>
                         <td class="center">Unidad</td>
                         <td class="border-left-1" width="20%">Fecha de elaboración</td>
                     </tr>

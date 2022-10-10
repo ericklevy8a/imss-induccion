@@ -1,4 +1,4 @@
-* {
+html * {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
@@ -17,13 +17,13 @@ body {
 	width: 100vw;
 	min-width: 800px;
 	font-family: Arial, Helvetica, sans-serif;
-	background-color: hsl(134, 10%, 90%);
+	background-color: #e3e8e4;
 }
 
 .container {
 	max-width: 1280px;
 	margin: 0 auto;
-	box-shadow: 1px 1px 8px 8px rgba(0, 0, 0, 0.5);
+	box-shadow: 1px 1px 8px 8px #00000080;
 }
 
 header {
@@ -96,7 +96,7 @@ nav ul li {
 
 nav ul li a {
 	display: block;
-	padding: 10px;
+	padding: 8px 16px;
 	text-decoration: none;
 	color: #001122;
 }
@@ -113,18 +113,16 @@ nav ul li a.active {
 
 .download {
 	display: inline-block;
-	text-decoration: none;
-	border: none;
-	background-color: #b48725;
 	color: #fff;
-	border-radius: 5px;
+	background-color: #f7af09;
+	text-decoration: none;
 	text-align: center;
-	padding: 0 16px;
-	margin-bottom: 1em;
-	height: 2em;
-	line-height: 2em;
-	font-size: 1rem;
 	font-weight: bold;
+	line-height: 1em;
+	margin-bottom: 1em;
+	padding: 0.5em 1em;
+	border: none;
+	border-radius: 0.25em;
 	cursor: pointer;
 }
 
@@ -133,11 +131,15 @@ nav ul li a.active {
 }
 
 .download:visited {
-	background-color: #ccc;
+	background-color: #b48725;
 }
 
 .download:disabled {
 	background-color: #ccc;
+}
+
+button.download {
+	background-color: #b48725;
 }
 
 .get-adobe img {
@@ -175,37 +177,37 @@ hr {
 	justify-content: center;
 }
 
-input[type='text'] {
-	font-size: 18px;
+input[type='search'] {
 	vertical-align: middle;
 	padding: 4px;
 	border: none;
 	border-radius: 4px;
+	font-size: 1em;
 }
 
 /* BARRAS DE NENSAJES */
+
 .msg-bar {
-	display: block;
-	padding: 4px;
+	display: inline-block;
+	padding: 4px 8px;
 	border-radius: 4px;
 	margin-bottom: 8px;
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: bold;
+	font-family: 'Arial Narrow', Arial, Helvetica, sans-serif;
 }
 
 .msg-error {
-	color: #ffffff;
-	background-color: #ff0000;
+	color: #fff;
+	background-color: #f99;
 }
 
 .msg-warn {
-	color: #000000;
-	background-color: #ffde39;
+	color: #000;
+	background-color: #fd9;
 }
 
 .msg-info {
-	color: #ffffff;
-	background-color: #4646ff;
+	color: #fff;
+	background-color: #99f;
 }
 
 /* TABLA DE GUIAS */
@@ -233,4 +235,12 @@ input[type='text'] {
 
 #guias td a.ver {
 	margin-bottom: 0;
+}
+
+/* MEDIA QUERIES*/
+
+@media screen and (max-width: 600px) {
+	nav ul li a {
+		font-size: 3em;
+	}
 }

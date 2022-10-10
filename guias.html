@@ -46,31 +46,27 @@
 
                 <hr>
 
-                <img class="float-right" src="img/guia.png" width="100" />
-
-                <p><strong>Ayuda para llenado de la guía de inducción</strong>
+                <p><strong>Guía de inducción al área y al puesto (pre-llenada)</strong>
                     <br>Formato de archivo: PDF
                 </p>
-                <a class="download" href="docs/Ayuda para llenado de la guia de induccion.pdf">Descargar</a>
-
-                <hr>
-
-                <p><strong>Guía de inducción al área y al puesto - formato en blanco</strong>
-                    <br>Formato de archivo: PDF
-                </p>
-                <a class="download"
-                    href="docs/Guia de induccion al area y al puesto - formato en blanco.pdf">Descargar</a>
-
-                <hr>
-
-
-                <p><strong>Guía de inducción al área y al puesto pre-llenada (PROTOTIPO)</strong>
-                    <br>Formato de archivo: PDF
-                </p>
-                <input type="text" name="matricula" id="matricula" size="9" maxlength="9" placeholder="Matrícula" />
+                <input type="search" name="matricula" id="matricula" maxlength="9" placeholder="Matrícula" required />
                 <button id="buscar" class="download">Buscar</button>
                 <div id="respuesta"></div>
                 <div id="guias"></div>
+
+                <hr>
+
+                <p><strong>Guía de inducción al área y al puesto (en blanco)</strong>
+                    <br>Formato de archivo: PDF
+                </p>
+                <a class="download" href="docs/guia-induccion-blanco.pdf" target="_blank">Descargar</a>
+
+                <hr>
+
+                <p><strong>Instructivo de llenado</strong>
+                    <br>Formato de archivo: PDF
+                </p>
+                <a class="download" href="docs/guia-induccion-ayuda.pdf" target="_blank">Descargar</a>
 
                 <hr>
 
@@ -87,116 +83,119 @@
 
     </div>
 
-</body>
-<script>
+    <!-- Codigo para manejar la busqueda y despliegue de guias prellenadas -->
+    <script>
 
-    //
-    // SCRIPT PARA LA GENERACION DE GUIAS DE INDUCCION PRE-LLENADAS
-    //
+        //
+        // SCRIPT PARA LA GENERACION DE GUIAS DE INDUCCION PRE-LLENADAS
+        //
 
-    // Referencias a objetos del DOM
-    const txtMatricula = document.getElementById('matricula');
-    const btnBuscar = document.getElementById('buscar');
-    const divRespuesta = document.getElementById('respuesta');
-    const divGuias = document.getElementById('guias');
+        // Referencias a objetos del DOM
+        const txtMatricula = document.getElementById('matricula');
+        const btnBuscar = document.getElementById('buscar');
+        const divRespuesta = document.getElementById('respuesta');
+        const divGuias = document.getElementById('guias');
 
-    // Manejador del cambio de matrícula
-    txtMatricula.oninput = function () {
-        // Habilitar boton de buscar
-        btnBuscar.removeAttribute('disabled');
-        // Eliminar mensajes y tabla
-        divRespuesta.innerHTML = '';
-        divGuias.innerHTML = '';
-    }
-
-    // Manejador del click de buscar
-    btnBuscar.onclick = function () {
-        // Deshabilitar boton de buscar
-        btnBuscar.setAttribute('disabled', 'disabled');
-        // Validar valor de matrícula
-        const matricula = txtMatricula.value;
-        const regex = new RegExp('^[0-9]{7,9}$');
-        const valid = regex.test(matricula);
-        if (valid) {
-            // Buscar guias
-            fetchData(matricula);
-        } else {
-            // Desplegar error
-            let html = '<span class="msg-bar msg-warn">';
-            html += 'ERROR: Se debe especificar una matrícula de trabajador válida!';
-            html += '</span>';
-            divRespuesta.innerHTML = html;
+        // Manejador del cambio de matrícula
+        txtMatricula.oninput = function () {
+            // Habilitar boton de buscar
+            btnBuscar.removeAttribute('disabled');
+            // Eliminar mensajes y tabla
+            divRespuesta.innerHTML = '';
+            divGuias.innerHTML = '';
         }
-    }
 
-    // Buscar guias de induccion para una matrícula dada
-    function fetchData(matricula) {
-        const url = 'getdata.php?matricula=' + encodeURI(matricula);
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                if (data.length === 0) {
-                    let html = '<span class="msg-bar msg-info">';
-                    html += 'RESPUESTA: No se encontraron inducciones para esa matrícula!';
-                    html += '</span>';
-                    divRespuesta.innerHTML = html;
-                    return;
-                }
-                if (data.length === 1) {
-                    const row = data[0];
-                    const url = makeURL(row);
-                    window.open(url, '_blank');
-                    return;
-                } else {
-                    showTable(data);
-                }
-            })
-            .catch(err => {
-                let html = '<span class="msg-bar msg-error">';
-                html += 'ERROR: Ocurrió un error desconocido!';
+        // Manejador del click de buscar
+        btnBuscar.onclick = function () {
+            // Deshabilitar boton de buscar
+            btnBuscar.setAttribute('disabled', 'disabled');
+            // Validar valor de matrícula
+            const matricula = txtMatricula.value;
+            const regex = new RegExp('^[0-9]{7,9}$');
+            const valid = regex.test(matricula);
+            if (valid) {
+                // Buscar guias
+                fetchData(matricula);
+            } else {
+                // Desplegar error
+                let html = '<span class="msg-bar msg-warn">';
+                html += 'Se debe especificar una matrícula de trabajador válida!';
                 html += '</span>';
                 divRespuesta.innerHTML = html;
-                throw err;
-            });
-    }
-
-    // Desplegar tabla de inducciones
-    function showTable(data) {
-        let html = '<span class="msg-bar msg-info">';
-        html += 'RESPUESTA: Se han encontrado varias guias de inducciones pendientes:';
-        html += '</span>';
-        divRespuesta.innerHTML = html;
-        html = '<table class="inducciones">';
-        html += '<tr>';
-        html += '<th>Fecha</th>';
-        html += '<th>Adscripción</th>';
-        html += '<th>Categoría</th>';
-        html += '</tr>';
-        for (let r = 0; r < data.length; r++) {
-            const url = makeURL(data[r]);
-            html += '<tr>';
-            html += `<td>${data[r]['Quincena']}</td>`;
-            html += `<td>${data[r]['Adscripcion']}</td>`;
-            html += `<td>${data[r]['Categoria']}</td>`;
-            html += `<td><a class="download ver" href="${url}" target="_blank">Ver</a></td>`;
-            html += '</tr>';
+            }
         }
-        html += '</table>';
-        divGuias.innerHTML = html;
-    }
 
-    function makeURL(row) {
-        let url = 'getpdf.php';
-        url += '?ADSCRIPCION=' + encodeURI(row['Adscripcion']);
-        url += '&NOMBRE_UNIDAD=' + encodeURI(row['Adscripcion']);
-        url += '&CATEGORIA=' + encodeURI(row['Categoria']);
-        url += '&MATRICULA=' + encodeURI(row['Matricula']);
-        url += '&NOMBRE_TRABAJADOR=' + encodeURI(row['Nombre']);
-        url += '&FECHA_INGRESO=' + encodeURI(row['Quincena']);
-        url += '&TIPO_COMPUESTO=' + encodeURI(row['Tipo Compuesto']);
-        return url;
-    }
+        // Buscar guias de induccion para una matrícula dada
+        function fetchData(matricula) {
+            const url = 'getdata_db.php?matricula=' + encodeURI(matricula);
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        let html = '<span class="msg-bar msg-info">';
+                        html += 'No se encontraron inducciones para esa matrícula!';
+                        html += '</span>';
+                        divRespuesta.innerHTML = html;
+                        return;
+                    }
+                    if (data.length === 1) {
+                        const row = data[0];
+                        const url = makeURL(row);
+                        window.open(url, '_blank');
+                        return;
+                    } else {
+                        showTable(data);
+                    }
+                })
+                .catch(err => {
+                    let html = '<span class="msg-bar msg-error">';
+                    html += 'Ocurrió un error desconocido!';
+                    html += '</span>';
+                    divRespuesta.innerHTML = html;
+                    throw err;
+                });
+        }
 
-</script>
+        // Desplegar tabla de inducciones
+        function showTable(data) {
+            let html = '<span class="msg-bar msg-info">';
+            html += 'Se han encontrado varias guías de inducciones pendientes:';
+            html += '</span>';
+            divRespuesta.innerHTML = html;
+            html = '<table class="inducciones">';
+            html += '<tr>';
+            html += '<th>Fecha</th>';
+            html += '<th>Adscripción</th>';
+            html += '<th>Categoría</th>';
+            html += '<th>Acciones</th>';
+            html += '</tr>';
+            for (let r = 0; r < data.length; r++) {
+                const url = makeURL(data[r]);
+                html += '<tr>';
+                html += `<td>${data[r]['Quincena']}</td>`;
+                html += `<td>${data[r]['Adscripcion']}</td>`;
+                html += `<td>${data[r]['Categoria']}</td>`;
+                html += `<td><a class="download ver" href="${url}" target="_blank">Ver</a></td>`;
+                html += '</tr>';
+            }
+            html += '</table>';
+            divGuias.innerHTML = html;
+        }
+
+        function makeURL(row) {
+            let url = 'getpdf.php';
+            url += '?ADSCRIPCION=' + encodeURI(row['Adscripcion']);
+            url += '&NOMBRE_UNIDAD=' + encodeURI(row['Adscripcion']);
+            url += '&CATEGORIA=' + encodeURI(row['Categoria']);
+            url += '&MATRICULA=' + encodeURI(row['Matricula']);
+            url += '&NOMBRE_TRABAJADOR=' + encodeURI(row['Nombre']);
+            url += '&FECHA_INGRESO=' + encodeURI(row['Quincena']);
+            url += '&TIPO_COMPUESTO=' + encodeURI(row['Tipo Compuesto']);
+            return url;
+        }
+
+    </script>
+
+</body>
 
 </html>
