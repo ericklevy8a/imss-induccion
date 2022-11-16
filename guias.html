@@ -105,6 +105,14 @@
             divGuias.innerHTML = '';
         }
 
+        // Manejador de la tecla enter dentro del cuadro de texto
+        txtMatricula.onkeypress = function (evt) {
+            if (evt.key === "Enter") {
+                evt.preventDefault();
+                btnBuscar.click();
+            }
+        }
+
         // Manejador del click de buscar
         btnBuscar.onclick = function () {
             // Deshabilitar boton de buscar
@@ -127,25 +135,18 @@
 
         // Buscar guias de induccion para una matrícula dada
         function fetchData(matricula) {
-            const url = 'getdata_db.php?matricula=' + encodeURI(matricula);
+            const url = 'get_guias.php?matricula=' + encodeURI(matricula);
             fetch(url)
                 .then(res => res.json())
                 .then(data => {
                     if (data.length === 0) {
                         let html = '<span class="msg-bar msg-info">';
-                        html += 'No se encontraron inducciones para esa matrícula!';
+                        html += 'No se encontraron guías de inducciones para esa matrícula!';
                         html += '</span>';
                         divRespuesta.innerHTML = html;
                         return;
                     }
-                    if (data.length === 1) {
-                        const row = data[0];
-                        const url = makeURL(row);
-                        window.open(url, '_blank');
-                        return;
-                    } else {
-                        showTable(data);
-                    }
+                    showTable(data);
                 })
                 .catch(err => {
                     let html = '<span class="msg-bar msg-error">';
@@ -159,7 +160,7 @@
         // Desplegar tabla de inducciones
         function showTable(data) {
             let html = '<span class="msg-bar msg-info">';
-            html += 'Se han encontrado varias guías de inducciones pendientes:';
+            html += 'Se han encontrado guías de inducciones pendientes:';
             html += '</span>';
             divRespuesta.innerHTML = html;
             html = '<table class="inducciones">';
@@ -173,8 +174,8 @@
                 const url = makeURL(data[r]);
                 html += '<tr>';
                 html += `<td>${data[r]['Quincena']}</td>`;
-                html += `<td>${data[r]['Adscripcion']}</td>`;
-                html += `<td>${data[r]['Categoria']}</td>`;
+                html += `<td>${data[r]['Adscripción']}</td>`;
+                html += `<td>${data[r]['Categoría']}</td>`;
                 html += `<td><a class="download ver" href="${url}" target="_blank">Ver</a></td>`;
                 html += '</tr>';
             }
@@ -182,12 +183,13 @@
             divGuias.innerHTML = html;
         }
 
+        // Formar enlaces al generador de PDF con los datos de la guía
         function makeURL(row) {
             let url = 'getpdf.php';
-            url += '?ADSCRIPCION=' + encodeURI(row['Adscripcion']);
-            url += '&NOMBRE_UNIDAD=' + encodeURI(row['Adscripcion']);
-            url += '&CATEGORIA=' + encodeURI(row['Categoria']);
-            url += '&MATRICULA=' + encodeURI(row['Matricula']);
+            url += '?ADSCRIPCION=' + encodeURI(row['Adscripción']);
+            url += '&NOMBRE_UNIDAD=' + encodeURI(row['Adscripción']);
+            url += '&CATEGORIA=' + encodeURI(row['Categoría']);
+            url += '&MATRICULA=' + encodeURI(row['Matrícula']);
             url += '&NOMBRE_TRABAJADOR=' + encodeURI(row['Nombre']);
             url += '&FECHA_INGRESO=' + encodeURI(row['Quincena']);
             url += '&TIPO_COMPUESTO=' + encodeURI(row['Tipo Compuesto']);

@@ -159,11 +159,21 @@ button.download {
 	margin: 0 1em 1em 1em;
 }
 
-.sidenote img.graph {
+.flex-column {
+	display: flex;
+	flex-direction: column;
+}
+
+.sidenote .chart {
+	position: relative;
+	clear: both;
+	height: 400px;
+	width: 100%;
+	margin: 1em;
 	margin-bottom: 1em;
 }
 
-.sidenote img.graph:last-child {
+.sidenote .chart:last-child {
 	margin-bottom: 0;
 }
 
@@ -208,6 +218,33 @@ input[type='search'] {
 .msg-info {
 	color: #fff;
 	background-color: #99f;
+}
+
+/* TABLA DE AVANCES */
+
+.avances table {
+	margin-bottom: 8px;
+}
+
+.avances th {
+	color: var(--color-main-bg);
+	background-color: var(--color-logo-imss);
+	border-radius: 4px;
+	padding: 4px 16px;
+	margin: 2px;
+}
+
+.avances td {
+	color: var(--color-main-text);
+	background-color: var(--color-main-bg);
+	border: none;
+	border-radius: 4px;
+	padding: 4px 16px;
+	margin: 2px;
+}
+
+.avances td a.ver {
+	margin-bottom: 0;
 }
 
 /* TABLA DE GUIAS */

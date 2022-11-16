@@ -15,14 +15,14 @@ if (!$matricula) {
 
 $data = array(); // Datos a retornar
 
-$field_name = array();
-$row_count = 0;
-
 $mysqli = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DATA);
 
 // Valida la apertura de la conexión a base de datos
 if ($mysqli->connect_errno == 0) {
-    $sql = "SELECT * FROM `t_guias_cache` WHERE `Matrícula` = " . $matricula;
+    $sql = sprintf(
+        "SELECT * FROM `t_guias_cache` WHERE `Matrícula` = '%s' ORDER BY `Fecha`",
+        $mysqli->real_escape_string($matricula)
+    );
     if ($res = $mysqli->query($sql)) {
         while ($row = $res->fetch_assoc()) {
             $data[] = $row;
