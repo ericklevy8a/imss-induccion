@@ -274,6 +274,17 @@ input[type='search'] {
 	margin-bottom: 0;
 }
 
+/* ADMIN SECTION */
+
+.admin {
+	background-color: var(--color-main-text) !important;
+	color: var(--color-resalte);
+}
+
+.hide {
+	display: none;
+}
+
 /* MEDIA QUERIES*/
 
 @media screen and (max-width: 600px) {

@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>PIAP - Módulo Administrativo</title>
+    <link rel="shortcut icon" type="image/x-icon" href="ico/imss.ico" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="admin.js" defer></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header></header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="guias.html">Guías</a></li>
+                <li><a href="avances.html">Avances</a></li>
+                <li><a href="material.html">Material</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="admin.html" class="active admin">Administrador</a></li>
+            </ul>
+        </nav>
+
+        <main class="admin">
+
+            <h1>Programa de inducción al área y al puesto</h1>
+
+            <article>
+
+                <h2>Módulo del Administrador</h2>
+
+                <p>Este módulo y sus secciones son exclusivos para el uso del
+                    administrador del sistema de apoyo para el programa de
+                    inducción al área y al puesto.</p>
+
+                <P>Esta sección debe estar protegida con contraseña, pero si ha
+                    llegado hasta aqui y no cuenta con la debida autorización,
+                    deberá regresar a cualquiera de las secciones públicas.</P>
+
+            </article>
+
+            <article class="sidenote">
+
+                <h2>Actualización de la BD</h2>
+
+                <hr>
+
+                <p><strong>Carga de Archivo Excel</strong></p>
+
+                <p>Esta herramienta permite cargar un archivo de Excel (.xlsx)
+                    con los datos de las inducciones para actualizar la base de
+                    datos usada para desplegar las guias, previa validación del
+                    formato y contenido.
+                </p>
+
+                <form action="" id="form-file">
+                    Selecciona el archivo a cargar:
+                    <input type="file" name="file" id="file" accept=".xlsx">
+                    <input type="submit" value="Enviar" name="submit" id="btn-submit" class="download hide">
+                    <input type="button" value="Cancelar" name="cancel" id="btn-cancel" class="download hide">
+                    <span id="upload-status"></span>
+                </form>
+
+            </article>
+
+        </main>
+
+        <footer>
+            <p>Zaragoza No. 62, Col. Centro, C.P. 28000, Colima, Col. Tel. 312 312 6959</p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
