@@ -12,7 +12,7 @@ use Dompdf\Dompdf;
 $pdf = new Dompdf();
 
 // Ajustar la raíz del documento
-$pdf->getOptions()->setChroot($CHROOOT);
+$pdf->getOptions()->setChroot($CHROOT);
 
 // Definir tamaño y orientación del medio (papel)
 $pdf->setPaper("letter", "portrait");

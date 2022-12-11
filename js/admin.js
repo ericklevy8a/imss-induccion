@@ -40,7 +40,7 @@ function admin_carga(form) {
     });
 
     // enviar
-    peticion.open('POST', 'admin_carga.php');
+    peticion.open('POST', '../services/put_file.php');
     peticion.send(new FormData(form));
 
 }
