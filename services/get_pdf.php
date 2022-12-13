@@ -13,6 +13,8 @@ $pdf = new Dompdf();
 
 // Ajustar la raíz del documento
 $pdf->getOptions()->setChroot($CHROOT);
+// Habilitar elementos remotos (Google fonts)
+$pdf->getOptions()->setIsRemoteEnabled(true);
 
 // Definir tamaño y orientación del medio (papel)
 $pdf->setPaper("letter", "portrait");
@@ -47,15 +49,19 @@ $DATOS = [
 
 <style>
     @font-face {
-        font-family: "Montserrat";
+        font-family: 'Montserrat';
         font-weight: normal;
-        src: url('./css/Montserrat-Regular.ttf');
+        font-style: normal;
+        font-variant: normal;
+        src: url('../fonts/Montserrat-Regular.ttf') format('truetype');
     }
 
     @font-face {
-        font-family: "Montserrat";
+        font-family: 'Montserrat';
         font-weight: bold;
-        src: url('./css/Montserrat-Bold.ttf');
+        font-style: normal;
+        font-variant: normal;
+        src: url('../fonts/Montserrat-Bold.ttf') format('truetype');
     }
 
     html * {
@@ -162,7 +168,7 @@ $DATOS = [
         <table>
             <tr>
                 <td class="center">
-                    <img src="./img/imss_logo_trans.png" height="36" alt="">
+                    <img src="../img/imss_logo_trans.png" height="36" alt="">
                 </td>
                 <td class="center">
                     <h1>Guía de Inducción al Área y al Puesto</h1>
