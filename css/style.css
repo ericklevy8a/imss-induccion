@@ -1,3 +1,19 @@
+@font-face {
+	font-family: 'Montserrat';
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	src: url('../fonts/Montserrat-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	font-weight: bold;
+	font-style: normal;
+	font-variant: normal;
+	src: url('../fonts/Montserrat-Bold.ttf') format('truetype');
+}
+
 html * {
 	padding: 0;
 	margin: 0;
@@ -145,6 +161,10 @@ button.download {
 
 .get-adobe img {
 	margin-bottom: 0;
+}
+
+.docs-draw {
+	width: min(100%, 760px);
 }
 
 /* NOTA EN LATERAL */
