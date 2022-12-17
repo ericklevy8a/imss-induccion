@@ -168,7 +168,7 @@ $DATOS = [
         <table>
             <tr>
                 <td class="center">
-                    <img src="../img/imss_logo_trans.png" height="36" alt="">
+                    <img src="../img/logo-imss.png" height="36" alt="">
                 </td>
                 <td class="center">
                     <h1>Guía de Inducción al Área y al Puesto</h1>
