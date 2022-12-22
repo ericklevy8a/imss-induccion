@@ -42,7 +42,14 @@ function admin_carga(form) {
     // enviar
     peticion.open('POST', '../services/put_file.php');
     peticion.send(new FormData(form));
-
+    //peticion.responseType = 'json';
+    peticion.onload = () => {
+        if (peticion.readyState == 4 && peticion.status == 200) {
+            const data = peticion.response;
+            console.log(data);
+            spanStatus.innerHTML = '<span class="msg-bar msg-info">Carga de archivo completada (' + data + ')!</span>';
+        }
+    };
 }
 
 // detecta seleccion de archivo

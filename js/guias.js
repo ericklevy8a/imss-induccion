@@ -47,7 +47,7 @@ btnBuscar.onclick = function () {
 
 // Buscar guias de induccion para una matrícula dada
 function fetchData(matricula) {
-    const url = 'get_guias.php?matricula=' + encodeURI(matricula);
+    const url = './services/get_guias.php?matricula=' + encodeURI(matricula);
     fetch(url)
         .then(res => res.json())
         .then(data => {
