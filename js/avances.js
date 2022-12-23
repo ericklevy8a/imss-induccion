@@ -183,19 +183,10 @@ function showGuias(data) {
     divGuias.innerHTML = html;
 }
 
-// Formar enlaces al generador de PDF con los datos de la guía
+// Formar enlaces al generador de PDF
 function makeURL(row) {
     let url = baseUrl + 'services/get_pdf.php';
     url += '?id=' + encodeURIComponent(row['id']);
-    /*
-    url += '?ADSCRIPCION=' + encodeURIComponent(row['Adscripción']);
-    url += '&NOMBRE_UNIDAD=' + encodeURIComponent(row['Adscripción']);
-    url += '&CATEGORIA=' + encodeURIComponent(row['Categoría']);
-    url += '&MATRICULA=' + encodeURIComponent(row['Matrícula']);
-    url += '&NOMBRE_TRABAJADOR=' + encodeURIComponent(row['Nombre']);
-    url += '&FECHA_INGRESO=' + encodeURIComponent(row['Quincena']);
-    url += '&TIPO_COMPUESTO=' + encodeURIComponent(row['Tipo Compuesto']);
-    */
     return url;
 }
 
