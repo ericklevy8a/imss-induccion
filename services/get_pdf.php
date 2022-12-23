@@ -26,15 +26,36 @@ ob_start();
 // Obtener datos
 //
 
+$id = $_REQUEST['id'] ?? FALSE;
+$row = [];
+
+if ($id) {
+    // Conectar a la base de datos
+    $mysqli = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DATA);
+
+    // Valida la apertura de la conexión a base de datos
+    if ($mysqli->connect_errno == 0) {
+        $sql = sprintf(
+            "SELECT * FROM `t_guias_cache` WHERE `id` = '%s'",
+            $mysqli->real_escape_string($id)
+        );
+        if ($res = $mysqli->query($sql)) {
+            $row = $res->fetch_assoc();
+        }
+        // Cerrar la conexión a base de datos
+        $mysqli->close();
+    }
+}
+
 $DATOS = [
-    'NOMBRE_UNIDAD'     => $_REQUEST['NOMBRE_UNIDAD'] ?? '',
+    'NOMBRE_UNIDAD'     => $row['Adscripción'] ?? '',
     'FECHA_ELABORA'     => $_REQUEST['FECHA_ELABORA'] ?? '',
-    'MATRICULA'         => $_REQUEST['MATRICULA'] ?? '',
-    'NOMBRE_TRABAJADOR' => $_REQUEST['NOMBRE_TRABAJADOR'] ?? '',
-    'CATEGORIA'         => $_REQUEST['CATEGORIA'] ?? '',
-    'TIPO_COMPUESTO'    => $_REQUEST['TIPO_COMPUESTO'] ?? '',
-    'ADSCRIPCION'       => $_REQUEST['ADSCRIPCION'] ?? '',
-    'FECHA_INGRESO'     => $_REQUEST['FECHA_INGRESO'] ?? '',
+    'MATRICULA'         => $row['Matrícula'] ?? '',
+    'NOMBRE_TRABAJADOR' => $row['Nombre'] ?? '',
+    'CATEGORIA'         => $row['Categoría'] ?? '',
+    'TIPO_COMPUESTO'    => $row['Tipo Compuesto'] ?? '',
+    'ADSCRIPCION'       => $row['Adscripción'] ?? '',
+    'FECHA_INGRESO'     => $row['Quincena'] ?? '',
     'FECHA_INDUCCION'   => $_REQUEST['FECHA_INDUCCION'] ?? '',
     'DURACION'          => $_REQUEST['DURACION'] ?? '',
     'NOMBRE_INSTRUCTOR' => $_REQUEST['NOMBRE_INSTRUCTOR'] ?? '',

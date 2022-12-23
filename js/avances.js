@@ -1,8 +1,9 @@
 //
-// SCRIPT PARA LA GENERACION DE GRAFICAS, TABLAS, LISTADOS Y GUIAS DE INDUCCION PRE-LLENADAS
+// SCRIPT AUXILIAR PARA LA INTERACCION CON LOS SERVICIOS
+// GENERADORES DE GRAFICAS, TABLAS, LISTADOS Y GUIAS DE INDUCCION PRE-LLENADAS
 //
 
-const baseUrl = ""; //"https://imss-induccion.000webhostapp.com/";
+const baseUrl = "";
 
 // Referencias a objetos del DOM
 const selAdscripcion = document.getElementById('adscripcion');
@@ -170,9 +171,12 @@ function showGuias(data) {
         html += '<tr>';
         html += `<td align="center">${r + 1}</td>`;
         html += `<td>${data[r]['Quincena']}</td>`;
-        html += `<td>${data[r]['Nombre']}</td>`;
+        html += `<td>${(data[r]['Nombre']).replace(/\//g, ' ')}</td>`;
         html += `<td>${data[r]['Categoría']}</td>`;
-        html += `<td><a class="download ver" href="${url}" target="_blank">Ver</a></td>`;
+        html += `<td><div class="acciones">`
+        html += `<a class="download ver" href="${url}" target="_blank"><span class="material-icons md-24">download</span></a>`;
+        html += `<a class="download disabled" href="#"><span class="material-icons md-24">upload_file</span></a>`;
+        html += `</div></td>`;
         html += '</tr>';
     }
     html += '</table>';
@@ -182,13 +186,16 @@ function showGuias(data) {
 // Formar enlaces al generador de PDF con los datos de la guía
 function makeURL(row) {
     let url = baseUrl + 'services/get_pdf.php';
-    url += '?ADSCRIPCION=' + encodeURI(row['Adscripción']);
-    url += '&NOMBRE_UNIDAD=' + encodeURI(row['Adscripción']);
-    url += '&CATEGORIA=' + encodeURI(row['Categoría']);
-    url += '&MATRICULA=' + encodeURI(row['Matrícula']);
-    url += '&NOMBRE_TRABAJADOR=' + encodeURI(row['Nombre']);
-    url += '&FECHA_INGRESO=' + encodeURI(row['Quincena']);
-    url += '&TIPO_COMPUESTO=' + encodeURI(row['Tipo Compuesto']);
+    url += '?id=' + encodeURIComponent(row['id']);
+    /*
+    url += '?ADSCRIPCION=' + encodeURIComponent(row['Adscripción']);
+    url += '&NOMBRE_UNIDAD=' + encodeURIComponent(row['Adscripción']);
+    url += '&CATEGORIA=' + encodeURIComponent(row['Categoría']);
+    url += '&MATRICULA=' + encodeURIComponent(row['Matrícula']);
+    url += '&NOMBRE_TRABAJADOR=' + encodeURIComponent(row['Nombre']);
+    url += '&FECHA_INGRESO=' + encodeURIComponent(row['Quincena']);
+    url += '&TIPO_COMPUESTO=' + encodeURIComponent(row['Tipo Compuesto']);
+    */
     return url;
 }
 

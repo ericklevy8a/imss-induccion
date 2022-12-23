@@ -31,10 +31,6 @@ while (($row = fgetcsv($handler, 250)) != FALSE) {
 // Cerrar el archivo
 fclose($handler);
 
-// Desplegar los datos en formato JSON
-//$json = json_encode($array);
-//echo $json;
-
 // Preparar la base de datos
 include_once('./config.php');
 $mysqli = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DATA);
@@ -74,7 +70,15 @@ foreach ($array as $row) {
         $num = 0;
     }
 }
+$sql = "UPDATE t_guias_2022 SET id = MD5(CONCAT(`Adscripción`,`Matrícula`,`Fecha`,`row`))";
+$mysqli->query($sql);
+
+$sql = "CALL p_id_update";
+$mysqli->query($sql);
+
+$sql = "CALL p_guias_cache";
+$mysqli->query($sql);
 
 $mysqli->close();
 
-echo "{$num} registros en la tabla!";
+exit("{$sum} registros procesados");

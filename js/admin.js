@@ -1,3 +1,10 @@
+//
+// SCRIPT AUXILIAR PARA LA INTERACCION CON LOS SERVICIOS
+// DE RECEPCION DE ARCHIVOS CSV
+//
+
+const baseUrl = "";
+
 // DOM objects
 const form = document.getElementById('form-file');
 const fileSel = document.getElementById('file');
@@ -26,7 +33,7 @@ function admin_carga(form) {
 
     // terminar
     peticion.addEventListener("load", () => {
-        spanStatus.innerHTML = '<span class="msg-bar msg-info">Carga de archivo terminada!</span>';
+        spanStatus.innerHTML += '<span class="msg-bar msg-info">Carga de archivo terminada!</span>';
         btnSubmit.classList.add('hide');
         btnCancel.classList.add('hide');
     });
@@ -40,7 +47,7 @@ function admin_carga(form) {
     });
 
     // enviar
-    peticion.open('POST', '../services/put_file.php');
+    peticion.open('POST', baseUrl + 'services/put_file.php');
     peticion.send(new FormData(form));
     //peticion.responseType = 'json';
     peticion.onload = () => {

@@ -1,14 +1,9 @@
 {
-    "name": "erick/imss-induccion",
-    "description": "Sistema de Apoyo al Programa de Induccion al Area y al Puesto",
+    "name": "levysci/induccion",
+    "description": "Un proyecto de apoyo al programa de induccion al área y al puesto desarrollado para la el departamento de capacitación del OOADR Colima del IMSS",
+    "type": "project",
     "require": {
-        "dompdf/dompdf": "^2.0",
-        "phpoffice/phpspreadsheet": "^1.25"
-    },
-    "autoload": {
-        "psr-4": {
-            "Erick\\ImssInduccion\\": "src/"
-        }
+        "dompdf/dompdf": "^2.0"
     },
     "authors": [
         {
