@@ -4,7 +4,6 @@
 /vendor
 
 # misc
-.DS_Store
-web.config
-composer.*
 .vscode
+composer.lock
+web.config
