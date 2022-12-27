@@ -182,7 +182,7 @@ function showGuias(data) {
     divGuias.innerHTML = html;
 }
 
-// Formar enlaces al generador de PDF con los datos de la guía
+// Formar enlaces al generador de PDF con el id de la guia
 function makeURL(row) {
     let url = baseUrl + 'services/get_pdf.php';
     url += '?id=' + encodeURIComponent(row['id']);
