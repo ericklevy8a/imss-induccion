@@ -29,6 +29,13 @@ html * {
 	--color-main-bg: #fff;
 	--color-main-text: #13322b;
 	--color-logo-imss: #486f6c;
+
+	--color-msg-info: hsl(210, 50%, 40%);
+	--color-msg-info-light: hsl(210, 50%, 90%);
+	--color-msg-warn: hsl(50, 100%, 40%);
+	--color-msg-warn-light: hsl(50, 100%, 90%);
+	--color-msg-error: hsl(0, 50%, 40%);
+	--color-msg-error-light: hsl(0, 50%, 90%);
 }
 
 body {
@@ -155,10 +162,8 @@ nav ul li a.active {
 
 .download:disabled {
 	background-color: #ccc;
-}
-
-button.download {
-	background-color: #b48725;
+	pointer-events: none;
+	cursor: default;
 }
 
 .get-adobe img {
@@ -166,18 +171,18 @@ button.download {
 }
 
 .acciones {
-    display:flex;
-    flex-direction: row;
-    gap: 4px;
+	display: flex;
+	flex-direction: row;
+	gap: 4px;
 }
 
-.acciones > .download {
+.acciones>.download {
 	line-height: 1em;
 	margin-bottom: 4px;
 	padding: 4px 8px;
 }
 
-.acciones > .disabled {
+.acciones>.disabled {
 	background-color: #ccc;
 	pointer-events: none;
 	cursor: default;
@@ -230,11 +235,11 @@ button.download {
 }
 
 .card {
-    background-color: white;
-    border-radius: 4px;
-    box-shadow: 2px 2px 4px #ddd;
-    padding: 8px 8px;
-    margin: 16px;
+	background-color: white;
+	border-radius: 4px;
+	box-shadow: 2px 2px 4px #ddd;
+	padding: 8px 8px;
+	margin: 16px;
 }
 
 .chart {
@@ -255,26 +260,44 @@ input[type='search'] {
 /* BARRAS DE NENSAJES */
 
 .msg-bar {
-	display: inline-block;
+	display: flex;
+	align-items: center;
 	padding: 4px 8px;
 	border-radius: 4px;
 	margin-bottom: 8px;
-	font-family: 'Arial Narrow', Arial, Helvetica, sans-serif;
+	font-size: 12px;
 }
 
 .msg-error {
-	color: #fff;
-	background-color: #f99;
+	color: var(--color-msg-error);
+	background-color: var(--color-msg-error-light);
+	border: 1px solid var(--color-msg-error);
 }
 
 .msg-warn {
-	color: #000;
-	background-color: #fd9;
+	color: var(--color-msg-warn);
+	background-color: var(--color-msg-warn-light);
+	border: 1px solid var(--color-msg-warn);
 }
 
 .msg-info {
-	color: #fff;
-	background-color: #99f;
+	color: var(--color-msg-info);
+	background-color: var(--color-msg-info-light);
+	border: 1px solid var(--color-msg-info);
+}
+
+/* BARRA DE PROGRESO */
+
+.progress-border {
+	width: 100%;
+	border: 1px solid var(--color-logo-imss);
+	background-color: white;
+}
+
+.progress-bar {
+	color: white;
+	background-color: var(--color-logo-imss);
+	height: 24px;
 }
 
 /* TABLA DE AVANCES */
@@ -325,9 +348,9 @@ input[type='search'] {
 }
 
 select#adscripcion {
-    padding: 4px 4px;
-    border: none;
-    border-radius: 4px;
+	padding: 4px 4px;
+	border: none;
+	border-radius: 4px;
 }
 
 /* ADMIN SECTION */

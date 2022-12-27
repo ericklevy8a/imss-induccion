@@ -17,6 +17,11 @@ if (!($handler = fopen($tmp_name, 'r')))
 
 // Obtener nombres de columnas
 $cols = fgetcsv($handler, 250);
+if (sizeof($cols) == 0) 
+    exit('ERROR: No se encontraron columnas!');
+
+// Remover el BOM del UTF-8 de haberlo
+$cols = str_replace("\xef\xbb\xbf", '', $cols);
 
 // Cargar los datos en una matriz asociativa
 $array = [];
@@ -70,8 +75,6 @@ foreach ($array as $row) {
         $num = 0;
     }
 }
-$sql = "UPDATE t_guias_2022 SET id = MD5(CONCAT(`Adscripción`,`Matrícula`,`Fecha`,`row`))";
-$mysqli->query($sql);
 
 $sql = "CALL p_id_update";
 $mysqli->query($sql);
@@ -81,4 +84,4 @@ $mysqli->query($sql);
 
 $mysqli->close();
 
-exit("{$sum} registros procesados");
+exit("se han procesado {$sum} registros");

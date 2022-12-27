@@ -1,6 +1,6 @@
 <?php
 
-$CHROOT = 'D:\Dev\html\Induccion\imss-induccion';
+$CHROOT = 'D:/Dev/html/Induccion/imss-induccion/';
 
 $DB_HOST = 'localhost';
 $DB_USER = 'app_induccion';

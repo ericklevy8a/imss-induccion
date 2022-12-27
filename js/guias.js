@@ -5,6 +5,16 @@
 
 const baseUrl = "";
 
+// Desplegar barra con mensaje
+function showMsgBar(container, msg, type = 'info') {
+    const iconName = (type === 'warn' ? 'warning' : type);
+    let html = `<div class="msg-bar msg-${type}" onClick="this.parentElement.innerHTML=''">`;
+    html += `<span class="material-icons md-24">${iconName}</span>`;
+    html += msg;
+    html += '</div>';
+    container.innerHTML = html;
+}
+
 // Referencias a objetos del DOM
 const txtMatricula = document.getElementById('matricula');
 const btnBuscar = document.getElementById('buscar');
@@ -40,11 +50,8 @@ btnBuscar.onclick = function () {
         // Buscar guias
         fetchData(matricula);
     } else {
-        // Desplegar error
-        let html = '<span class="msg-bar msg-warn">';
-        html += 'Se debe especificar una matrícula de trabajador válida!';
-        html += '</span>';
-        divRespuesta.innerHTML = html;
+        // Desplegar advertencia
+        showMsgBar(divRespuesta, 'Se debe especificar una matrícula de trabajador válida!', 'warn');
     }
 }
 
@@ -55,29 +62,20 @@ function fetchData(matricula) {
         .then(res => res.json())
         .then(data => {
             if (data.length === 0) {
-                let html = '<span class="msg-bar msg-info">';
-                html += 'No se encontraron guías de inducciones para esa matrícula!';
-                html += '</span>';
-                divRespuesta.innerHTML = html;
+                showMsgBar(divRespuesta, 'No se encontraron guías de inducciones pendientes para esa matrícula!', 'info');
                 return;
             }
             showTable(data);
         })
         .catch(err => {
-            let html = '<span class="msg-bar msg-error">';
-            html += 'Ocurrió un error desconocido!';
-            html += '</span>';
-            divRespuesta.innerHTML = html;
+            showMsgBar(divRespuesta, `Ocurrió un error (${err})`, 'error');
             throw err;
         });
 }
 
 // Desplegar tabla de inducciones
 function showTable(data) {
-    let html = '<span class="msg-bar msg-info">';
-    html += 'Se han encontrado guías de inducciones pendientes:';
-    html += '</span>';
-    divRespuesta.innerHTML = html;
+    showMsgBar(divRespuesta, 'Se encontraron las siguientes guías de inducciones pendientes:', 'info');
     html = '<table class="inducciones">';
     html += '<tr>';
     html += '<th>#</th>';
@@ -105,18 +103,9 @@ function showTable(data) {
     divGuias.innerHTML = html;
 }
 
-// Formar enlaces al generador de PDF con los datos de la guía
+// Formar enlaces al generador de PDF con el id de la guia
 function makeURL(row) {
     let url = baseUrl + 'services/get_pdf.php';
     url += '?id=' + encodeURIComponent(row['id']);
-    /*
-    url += '?ADSCRIPCION=' + encodeURIComponent(row['Adscripción']);
-    url += '&NOMBRE_UNIDAD=' + encodeURIComponent(row['Adscripción']);
-    url += '&CATEGORIA=' + encodeURIComponent(row['Categoría']);
-    url += '&MATRICULA=' + encodeURIComponent(row['Matrícula']);
-    url += '&NOMBRE_TRABAJADOR=' + encodeURIComponent(row['Nombre']);
-    url += '&FECHA_INGRESO=' + encodeURIComponent(row['Quincena']);
-    url += '&TIPO_COMPUESTO=' + encodeURIComponent(row['Tipo Compuesto']);
-    */
     return url;
 }

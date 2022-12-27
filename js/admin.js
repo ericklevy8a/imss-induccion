@@ -5,19 +5,29 @@
 
 const baseUrl = "";
 
+// Desplegar barra con mensaje
+function showMsgBar(container, msg, type = 'info') {
+    const iconName = (type === 'warn' ? 'warning' : type);
+    let html = `<div class="msg-bar msg-${type}" onClick="this.parentElement.innerHTML=''">`;
+    html += `<span class="material-icons md-24">${iconName}</span>`;
+    html += msg;
+    html += '</div>';
+    container.innerHTML = html;
+}
+
 // DOM objects
 const form = document.getElementById('form-file');
 const fileSel = document.getElementById('file');
 const btnSubmit = document.getElementById('btn-submit');
 const btnCancel = document.getElementById('btn-cancel');
-const spanStatus = document.getElementById('upload-status');
+const uploadStatus = document.getElementById('upload-status');
 
 const MAX_FILESIZE = 5 * 1024 * 1024;
 
+// Administrar el envio o carga del archivo
 function admin_carga(form) {
 
-
-    spanStatus.innerHTML = '<span class="msg-bar msg-info">Iniciando carga de archivo...</span>';
+    uploadStatus.innerHTML = 'Iniciando carga de archivo...';
 
     btnSubmit.classList.add('hide');
     btnCancel.classList.remove('hide');
@@ -27,13 +37,19 @@ function admin_carga(form) {
 
     // progreso
     peticion.upload.addEventListener("progress", (event) => {
-        let percent = Math.round(100 * event.loaded / event.total);
-        spanStatus.innerHTML = '<span class="msg-bar msg-info">' + percent + '%' + '</span>';
+        const percent = Math.round(100 * event.loaded / event.total);
+        const progressBar = document.querySelector('#file-progress .progress-bar');
+        if (!progressBar) {
+            const content = `<div id="file-progress" class="progress-border"><span class="progress-bar"></span>`;
+            uploadStatus.innerHTML = content;
+        }
+        progressBar.style.width = percent + '%';
+        progressBar.style.innerHTML = percent + '%';
     });
 
     // terminar
     peticion.addEventListener("load", () => {
-        spanStatus.innerHTML += '<span class="msg-bar msg-info">Carga de archivo terminada!</span>';
+        uploadStatus.innerHTML = 'Carga de archivo terminada! Procesando registros...';
         btnSubmit.classList.add('hide');
         btnCancel.classList.add('hide');
     });
@@ -41,7 +57,8 @@ function admin_carga(form) {
     // cancelar
     btnCancel.addEventListener("click", () => {
         peticion.abort();
-        spanStatus.innerHTML = '<span class="msg-bar msg-error">Carga de archivo cancelada!</span>';
+        const msg = 'Carga de archivo cancelada!';
+        showMsgBar(uploadStatus, msg, 'warn');
         btnSubmit.classList.remove('hide');
         btnCancel.classList.add('hide');
     });
@@ -49,34 +66,35 @@ function admin_carga(form) {
     // enviar
     peticion.open('POST', baseUrl + 'services/put_file.php');
     peticion.send(new FormData(form));
-    //peticion.responseType = 'json';
     peticion.onload = () => {
         if (peticion.readyState == 4 && peticion.status == 200) {
             const data = peticion.response;
-            console.log(data);
-            spanStatus.innerHTML = '<span class="msg-bar msg-info">Carga de archivo completada (' + data + ')!</span>';
+            const msg = `Procesamiento del archivo completado (${data})`;
+            showMsgBar(uploadStatus, msg, 'info');
         }
     };
 }
 
-// detecta seleccion de archivo
+// Detectar seleccion de archivo
 fileSel.addEventListener('change', (event) => {
-    spanStatus.innerHTML = '';
+    uploadStatus.innerHTML = '';
     btnSubmit.classList.add('hide');
     btnCancel.classList.add('hide');
     if (event.target.files.length === 1) {
         if (event.target.files[0].size > MAX_FILESIZE) {
-            spanStatus.innerHTML = '<span class="msg-bar msg-error">El archivo no debe superar los 5 MB!</span>';
+            const msg = 'El archivo no debe superar los 5 MB!';
+            showMsgBar(uploadStatus, msg, 'error');
         } else {
             btnSubmit.classList.remove('hide');
             btnCancel.classList.add('hide');
         }
     } else {
-        spanStatus.innerHTML = '<span class="msg-bar msg-error">Se debe seleccionar UN archivo!</span>';
+        const msg = 'Se debe seleccionar un archivo!';
+        showMsgBar(uploadStatus, msg, 'error');
     }
 });
 
-// intercepta envio de formulario
+// Interceptar envio del formulario (archivo)
 form.addEventListener('submit', function (event) {
     event.preventDefault();
     admin_carga(this);

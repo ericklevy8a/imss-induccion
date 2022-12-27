@@ -503,4 +503,5 @@ $pdf->loadHtml($html);
 $pdf->render();
 
 // Enviar el fichero PDF al navegador (Attachment => 0: para abrirse[1: para descargarse)
-$pdf->stream('guia-induccion.pdf', ['Attachment' => 0]);
+$savename = 'guia-induccion' . ($id ? '-' . $id : '') . '.pdf';
+$pdf->stream($savename, ['Attachment' => 0]);

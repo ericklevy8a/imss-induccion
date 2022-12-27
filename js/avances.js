@@ -5,6 +5,16 @@
 
 const baseUrl = "";
 
+// Desplegar barra con mensaje
+function showMsgBar(container, msg, type = 'info') {
+    const iconName = (type === 'warn' ? 'warning' : type);
+    let html = `<div class="msg-bar msg-${type}" onClick="this.parentElement.innerHTML=''">`;
+    html += `<span class="material-icons md-24">${iconName}</span>`;
+    html += msg;
+    html += '</div>';
+    container.innerHTML = html;
+}
+
 // Referencias a objetos del DOM
 const selAdscripcion = document.getElementById('adscripcion');
 const btnBuscar = document.getElementById('buscar');
@@ -36,17 +46,9 @@ btnBuscar.onclick = function () {
         // Buscar guias
         fetchGuias(adscripcion);
     } else {
-        // Desplegar error
+        // Desplegar advertencia
         showMsgBar(divRespuesta, 'Se debe seleccionar una adscripción válida!', 'warn');
     }
-}
-
-// Desplegar barra con mensaje
-function showMsgBar(container, msg, type = 'info') {
-    let html = '<span class="msg-bar msg-' + type + '">';
-    html += msg;
-    html += '</span>';
-    container.innerHTML = html;
 }
 
 // Obtener la fecha
@@ -59,7 +61,7 @@ function fetchFecha() {
             spanFecha.innerHTML = fecha;
         })
         .catch(err => {
-            showMsgBar(spanFecha, 'Ocurrió un error desconocido!', 'error');
+            showMsgBar(spanFecha, `Ocurrió un error (${err})`, 'error');
             throw err;
         });
 }
@@ -77,7 +79,7 @@ function fetchAvances(container, dispFunct, tipo) {
             dispFunct(container, data);
         })
         .catch(err => {
-            showMsgBar(container, 'Ocurrió un error desconocido!', 'error');
+            showMsgBar(container, `Ocurrió un error (${err})`, 'error');
             throw err;
         });
 }
@@ -116,7 +118,7 @@ function fetchAdscripciones() {
             populateOptions(data);
         })
         .catch(err => {
-            showMsgBar(divRespuesta, 'Ocurrió un error desconocido!', 'error');
+            showMsgBar(divRespuesta, `Ocurrió un error (${err})`, 'error');
             throw err;
         });
 }
@@ -147,18 +149,15 @@ function fetchGuias(adscripcion) {
             showGuias(data);
         })
         .catch(err => {
-            showMsgBar(divRespuesta, 'Ocurrió un error desconocido!', 'error');
+            showMsgBar(divRespuesta, `Ocurrió un error (${err})`, 'error');
             throw err;
         });
 }
 
 // Desplegar tabla de guias de induccion
 function showGuias(data) {
-    let html = '<span class="msg-bar msg-info">';
-    html += 'Se han desplegado las guías de inducción pendientes para esta adscripción:';
-    html += '</span>';
-    divRespuesta.innerHTML = html;
-    html = '<table class="inducciones">';
+    showMsgBar(divRespuesta, 'Se encontraron las siguientes guías de inducciones pendientes:', 'info');
+    let html = '<table class="inducciones">';
     html += '<tr>';
     html += '<th>#</th>';
     html += '<th>Fecha</th>';
@@ -187,15 +186,6 @@ function showGuias(data) {
 function makeURL(row) {
     let url = baseUrl + 'services/get_pdf.php';
     url += '?id=' + encodeURIComponent(row['id']);
-    /*
-    url += '?ADSCRIPCION=' + encodeURIComponent(row['Adscripción']);
-    url += '&NOMBRE_UNIDAD=' + encodeURIComponent(row['Adscripción']);
-    url += '&CATEGORIA=' + encodeURIComponent(row['Categoría']);
-    url += '&MATRICULA=' + encodeURIComponent(row['Matrícula']);
-    url += '&NOMBRE_TRABAJADOR=' + encodeURIComponent(row['Nombre']);
-    url += '&FECHA_INGRESO=' + encodeURIComponent(row['Quincena']);
-    url += '&TIPO_COMPUESTO=' + encodeURIComponent(row['Tipo Compuesto']);
-    */
     return url;
 }
 
